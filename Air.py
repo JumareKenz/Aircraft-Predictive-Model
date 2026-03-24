@@ -5,8 +5,13 @@ import joblib
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 # Load the trained model and preprocessing pipeline
-model = joblib.load("final_model.joblib")
-pipeline = joblib.load("full_pipeline.joblib")
+@st.cache_resource
+def load_models():
+    m = joblib.load("final_model.joblib")
+    p = joblib.load("full_pipeline.joblib")
+    return m, p
+
+model, pipeline = load_models()
 
 # 16 selected features for RUL prediction
 FEATURES = [
